@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		  <title>Munich Collaboration QA</title>
+		  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+		  <link rel="stylesheet" href="css/dashboard.css">
+		  
+	</head>
+
+	<body ng-app="myApp" ng-controller="SidebarCtrl">
+		<aknavbar></aknavbar>
+	 	<div id="wrapper">
+		    <!-- Sidebar -->
+		    <div id="sidebar-wrapper">
+		        <ul class="sidebar-nav">
+		            <li ng-repeat="hdr in headers" ng-model-instant>
+		                <h3>{{hdr}}</h3>
+						<select class="multiselect" data-placeholder="Select" 
+						                ng-model="options[hdr]" ng-options="item as item for item in get_unique(hdr)"
+						                multiple="multiple" multiselect-dropdown ng-model-instant>
+                        </select>
+						
+		            </li>
+					<br>
+					<button class="btn btn-success" ng-click = "collect()">Generate</button>    
+		       
+                        <li><h3>Other Resources</h3></li>
+                       <li>
+                        <a href="http://nbviewer.ipython.org/gist/akeshavan/593724ef136bade2d45a/Reproduce_Munich_FreesurferCross.ipynb">Freesurfer Cross Sectional</a></li>
+                        <li>
+                        <a href="http://nbviewer.ipython.org/gist/akeshavan/42b954f71c1668a26572/Reproduce_Munich_FreesurferLong.ipynb">Freesurfer Longitudinal</a></li>
+                        <li>
+                        <a href="https://dl.dropboxusercontent.com/u/9020198/munich_collaboration/munich.html#">Freesurfer Regional</a></li>
+                        <li><a href="http://nbviewer.ipython.org/gist/akeshavan/8e62843a6ffa1dfd7293/Reproduce_Munich_SienaX.ipynb">SIENAX</a>
+                        <li><a href="http://nbviewer.ipython.org/gist/akeshavan/d18d5df2cd9e4f2adf27/Reproduce_Munich_SIENA.ipynb">SIENA</a>
+   </li>
+
+                        </ul>
+		    </div>
+			<!-- End Sidebar -->
+ 
+	  
+	  	    <!-- Page Content -->
+	          <div id="page-content-wrapper">
+	              <div class="container-fluid">
+	                  <div class="row">
+	                      <div class="col-lg-12">
+
+							  <h1>Quality Check for the Reliability Project</h1>
+	                          <p>Automated neuroimaging algorithms aren't always perfect!
+								  This website helps us to quickly check the quality of outputs from segmentation
+								  and registration.
+								  Choose options on the right to filter images. The options are:</p>
+							  <b>Timepoints;</b> 1 - 6
+							  <br>
+							  <b>Scanners:</b> GE, Siemens (Si) and Phillips (Ph)
+							  <br>
+							  <b>Algorithm:</b> SIENAX (will add SIENA and Freesurfer)
+							  <br>
+							  <b>Type:</b> Type of image from each algorithm.
+							  <br>
+							  <br>
+							  Click the "Generate" button on the menu to display images.
+							  <br>
+							  <br>
+	                          <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Hide/Show Menu</a>
+							  <p></p>
+							  <div ng-repeat = "img in images">
+								  <div class="well">
+								  	<h5 ng-repeat = "hdr in headers">{{hdr}}: {{img[hdr]}}</h5>
+							      </div>
+								  
+								  <img ng-src="data/{{img.image}}" width="100%"/>
+								  
+							  </div>
+							  
+	                      </div>
+	                  </div>
+	              </div>
+	          </div>
+	          <!-- /#page-content-wrapper -->
+	  </div>
+	  <!--End Wrapper-->
+	</body>
+
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="bower_components/angular/angular.min.js"></script>
+	
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="bower_components/d3/d3.min.js"></script>
+	<script src="bower_components/underscore/underscore.js"></script>
+	<script src="js/bootstrap-multiselect.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/navbar.js"></script>
+	<script src="js/multiselect-dropdown.js"></script>
+    
+	<!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+</html>
